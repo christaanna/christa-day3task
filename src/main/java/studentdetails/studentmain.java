@@ -50,7 +50,11 @@ public class studentmain {
         } else {
             System.out.println("No document found to update.");
         }
-
+        Bson embeddedfilter = Filters.eq("student.name", "arun");
+        Bson embeddedupdate = Updates.set("student.name", "arjun");
+        collection.Update(filter, update);
+        
+        
         String resultCreateIndex = collection.createIndex(Indexes.ascending("name"));
         System.out.println(String.format("Index created: %s", resultCreateIndex));
         collection.createIndex(Indexes.ascending("name"));
