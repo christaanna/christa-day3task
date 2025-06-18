@@ -55,8 +55,8 @@ Embedded data (deep copies inside another document) do **not** reflect external 
 
 To reflect changes in embedded enrollments, you must update them manually:
 
-Bson embeddedFilter = Filters.eq("name", "arun");
-Bson embeddedUpdate = Updates.set("name", "arjun");
+Bson embeddedFilter = Filters.eq("student.name", "arun");
+Bson embeddedUpdate = Updates.set("student.name", "arjun");
 enrollmentCollection.updateMany(embeddedFilter, embeddedUpdate);
 
 
