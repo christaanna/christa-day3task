@@ -34,9 +34,26 @@ public class studentmain {
         Document doc8 = new Document("type" , "enrolled").append("Student" , doc1).append("Course" , doc4);
         collection2.insertOne(doc8);
 
-        Document doc7 = new Document("type" , "referenced").append("Student" ,
-                "685297fc9cf2672217b7519a").append("Course" , "685297fc9cf2672217b7519d");
+         Document doc7 = new Document("type" , "referenced").append("Student" ,
+                doc2.getObjectId("_id")).append("Course" ,  doc5.getObjectId("_id"));
         collection2.insertOne(doc7);
+
+        Bson filter = Filters.eq("name", "arun");
+        Bson update = Updates.set("name", "arjun");
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions()
+                .returnDocument(ReturnDocument.AFTER);
+        Document updatedDoc = collection.findOneAndUpdate(filter, update, options);
+
+        if (updatedDoc != null) {
+            System.out.println("\nUpdated Student:");
+            System.out.println(updatedDoc.toJson());
+        } else {
+            System.out.println("No document found to update.");
+        }
+
+        String resultCreateIndex = collection.createIndex(Indexes.ascending("name"));
+        System.out.println(String.format("Index created: %s", resultCreateIndex));
+        collection.createIndex(Indexes.ascending("name"));
         System.out.println("\n--- Students ---");
         for (Document studentDoc : collection.find()) {
             System.out.println(studentDoc.toJson());
